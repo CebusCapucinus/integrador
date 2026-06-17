@@ -10,7 +10,7 @@ public class Producto extends Base {
     private boolean disponible;
     private Categoria categoria;
 
-    private Producto(String nombre, String descripcion, double precio,
+    public Producto(String nombre, String descripcion, double precio,
             int stock, String imagen, boolean disponible, Categoria categoria) {
 
         super();

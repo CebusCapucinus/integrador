@@ -37,7 +37,7 @@ public class ProductService {
     }
 
     public Producto crear(String nombre, String descripcion, double precio,
-            int stock, String imagen, boolean disponible, Long categoriaId)
+            Integer stock, String imagen, boolean disponible, Long categoriaId)
             throws ValidateException, EntityNotFoundException {
 
         if (nombre == null || nombre.trim().isEmpty()) {
@@ -56,5 +56,68 @@ public class ProductService {
         producto.setId(nextId++);
         productos.put(producto.getId(), producto);
         return producto;
+    }
+
+    public void editar(Long id, String nombre, String descripcion,
+            Double precio, Integer stock, String imagen, Boolean disponible,
+            Long categoriaId) throws EntityNotFoundException, ValidateException {
+
+        Producto producto = productos.get(id);
+        if (producto == null || producto.isEliminado()) {
+            throw new EntityNotFoundException("Producto no encontrado / eliminado");
+
+        }
+        if (nombre != null && !nombre.trim().isEmpty()) {
+            producto.setNombre(nombre);
+        }
+        if (descripcion != null) {
+            producto.setDescripcion(descripcion);
+        }
+        if (precio != null) {
+            producto.setDescripcion(descripcion);
+        }
+        if (stock != null) {
+            if (stock < 0) {
+                throw new ValidateException("Stock no negativo");
+            }
+            producto.setStock(stock);
+        }
+        if (imagen != null) {
+            producto.setImagen(imagen);
+        }
+        if (disponible != null) {
+            producto.setDisponible(disponible);
+        }
+        if (categoriaId != null) {
+            Categoria categoria = categoryService.buscarPorId(categoriaId);
+            producto.setCategoria(categoria);
+        }
+
+    }
+
+    public void eliminar(Long id) throws EntityNotFoundException {
+        Producto producto = productos.get(id);
+        if (producto == null || producto.isEliminado()) {
+            throw new EntityNotFoundException("Producto no encontrado / eliminado");
+        }
+        producto.setEliminado(true);
+
+    }
+
+    public Producto buscarPorId(Long id) throws EntityNotFoundException {
+        Producto producto = productos.get(id);
+        if (producto == null || producto.isEliminado()) {
+            throw new EntityNotFoundException("Producto no encontrado");
+        }
+        return producto;
+
+    }
+
+    public void reducirStock(Long productoId, Integer cantidad) throws EntityNotFoundException, ValidateException {
+        Producto producto = buscarPorId(productoId);
+        if (producto.getStock() < cantidad) {
+            throw new ValidateException("Stock insuficiente para " + producto.getNombre());
+        }
+        producto.setStock(producto.getStock() - cantidad);
     }
 }
