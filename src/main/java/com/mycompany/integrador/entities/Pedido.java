@@ -88,6 +88,10 @@ public class Pedido extends Base {
         return total;
     }
 
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
     public FormaPago getFormaPago() {
         return formaPago;
     }
