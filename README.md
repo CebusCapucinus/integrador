@@ -140,7 +140,7 @@ Repositorio del proyecto: https://github.com/CebusCapucinus/integrador
 
 Documentación en formato PDF: raiz del repositorio
 
-Video demostrativo: enlace por cargar***
+Video demostrativo: https://youtu.be/CMIWvcNVQUU
 
 Bibliografía y recursos
 Documentación oficial de Java (Oracle)
